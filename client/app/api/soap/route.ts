@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
       xml: string;
     };
 
-    const response = await fetch('http://localhost:3001/shipment', {
+    const response = await fetch('http://server:3001/shipment', {
       method: 'POST',
       headers: {
         'Content-Type': 'text/xml; charset=utf-8',

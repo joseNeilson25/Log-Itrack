@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  server:
+    build: ./server
+    container_name: logitrack-server
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+
+  client:
+    build: ./client
+    container_name: logitrack-client
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    restart: unless-stopped
