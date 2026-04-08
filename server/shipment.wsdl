@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+  name="ShipmentService"
+  targetNamespace="http://logitrack.com.br/shipment"
+  xmlns="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:tns="http://logitrack.com.br/shipment"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <types>
+    <xsd:schema targetNamespace="http://logitrack.com.br/shipment">
+      <xsd:complexType name="HistoricoItem">
+        <xsd:sequence>
+          <xsd:element name="status" type="xsd:string"/>
+          <xsd:element name="data" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="HistoricoArray">
+        <xsd:sequence>
+          <xsd:element name="item" type="tns:HistoricoItem" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="RemessaItem">
+        <xsd:sequence>
+          <xsd:element name="remessaId" type="xsd:string"/>
+          <xsd:element name="clienteId" type="xsd:string"/>
+          <xsd:element name="origem" type="xsd:string"/>
+          <xsd:element name="destino" type="xsd:string"/>
+          <xsd:element name="pesoKg" type="xsd:decimal"/>
+          <xsd:element name="descricao" type="xsd:string"/>
+          <xsd:element name="status" type="xsd:string"/>
+          <xsd:element name="criadoEm" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="RemessaArray">
+        <xsd:sequence>
+          <xsd:element name="item" type="tns:RemessaItem" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </types>
+
+  <message name="criarRemessaRequest">
+    <part name="clienteId" type="xsd:string"/>
+    <part name="origem" type="xsd:string"/>
+    <part name="destino" type="xsd:string"/>
+    <part name="pesoKg" type="xsd:decimal"/>
+    <part name="descricao" type="xsd:string"/>
+  </message>
+
+  <message name="criarRemessaResponse">
+    <part name="remessaId" type="xsd:string"/>
+    <part name="status" type="xsd:string"/>
+    <part name="criadoEm" type="xsd:string"/>
+  </message>
+
+  <message name="consultarRemessaRequest">
+    <part name="remessaId" type="xsd:string"/>
+  </message>
+
+  <message name="consultarRemessaResponse">
+    <part name="remessaId" type="xsd:string"/>
+    <part name="clienteId" type="xsd:string"/>
+    <part name="origem" type="xsd:string"/>
+    <part name="destino" type="xsd:string"/>
+    <part name="pesoKg" type="xsd:decimal"/>
+    <part name="descricao" type="xsd:string"/>
+    <part name="status" type="xsd:string"/>
+    <part name="criadoEm" type="xsd:string"/>
+    <part name="historico" type="tns:HistoricoArray"/>
+  </message>
+
+  <message name="atualizarStatusRequest">
+    <part name="remessaId" type="xsd:string"/>
+    <part name="status" type="xsd:string"/>
+  </message>
+
+  <message name="atualizarStatusResponse">
+    <part name="remessaId" type="xsd:string"/>
+    <part name="status" type="xsd:string"/>
+    <part name="atualizadoEm" type="xsd:string"/>
+  </message>
+
+  <message name="listarRemessasRequest">
+    <part name="status" type="xsd:string"/>
+    <part name="clienteId" type="xsd:string"/>
+    <part name="pagina" type="xsd:int"/>
+    <part name="tamanhoPagina" type="xsd:int"/>
+  </message>
+
+  <message name="listarRemessasResponse">
+    <part name="pagina" type="xsd:int"/>
+    <part name="tamanhoPagina" type="xsd:int"/>
+    <part name="total" type="xsd:int"/>
+    <part name="remessas" type="tns:RemessaArray"/>
+  </message>
+
+  <portType name="ShipmentPortType">
+    <operation name="criarRemessa">
+      <input message="tns:criarRemessaRequest"/>
+      <output message="tns:criarRemessaResponse"/>
+    </operation>
+
+    <operation name="consultarRemessa">
+      <input message="tns:consultarRemessaRequest"/>
+      <output message="tns:consultarRemessaResponse"/>
+    </operation>
+
+    <operation name="atualizarStatus">
+      <input message="tns:atualizarStatusRequest"/>
+      <output message="tns:atualizarStatusResponse"/>
+    </operation>
+
+    <operation name="listarRemessas">
+      <input message="tns:listarRemessasRequest"/>
+      <output message="tns:listarRemessasResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="ShipmentBinding" type="tns:ShipmentPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+    <operation name="criarRemessa">
+      <soap:operation soapAction="criarRemessa"/>
+      <input>
+        <soap:body use="literal" namespace="http://logitrack.com.br/shipment"/>
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://logitrack.com.br/shipment"/>
+      </output>
+    </operation>
+
+    <operation name="consultarRemessa">
+      <soap:operation soapAction="consultarRemessa"/>
+      <input>
+        <soap:body use="literal" namespace="http://logitrack.com.br/shipment"/>
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://logitrack.com.br/shipment"/>
+      </output>
+    </operation>
+
+    <operation name="atualizarStatus">
+      <soap:operation soapAction="atualizarStatus"/>
+      <input>
+        <soap:body use="literal" namespace="http://logitrack.com.br/shipment"/>
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://logitrack.com.br/shipment"/>
+      </output>
+    </operation>
+
+    <operation name="listarRemessas">
+      <soap:operation soapAction="listarRemessas"/>
+      <input>
+        <soap:body use="literal" namespace="http://logitrack.com.br/shipment"/>
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://logitrack.com.br/shipment"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="ShipmentService">
+    <port name="ShipmentPort" binding="tns:ShipmentBinding">
+      <soap:address location="http://localhost:3001/shipment"/>
+    </port>
+  </service>
+</definitions>
