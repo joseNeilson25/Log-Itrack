@@ -1,36 +1,189 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💻 LogiTrack SOAP Client
 
-## Getting Started
+Interface web para consumo de um serviço SOAP de gerenciamento de remessas.
 
-First, run the development server:
+Este projeto foi desenvolvido como parte de um desafio técnico e demonstra a integração entre um frontend moderno (Next.js) e um backend SOAP.
+
+---
+
+## 🧠 Tecnologias Utilizadas
+
+* Next.js
+* React
+* TypeScript
+* Fetch API
+* API Routes (Next.js)
+* XML parsing
+
+---
+
+## 🚀 Como executar o projeto
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse no navegador:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🔗 Integração com SOAP
 
-To learn more about Next.js, take a look at the following resources:
+A comunicação com o backend SOAP é feita através de uma API Route:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+/api/soap
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## ⚙️ Arquitetura da comunicação
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+Frontend → API Route → SOAP Server → API Route → Frontend
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🎯 Por que usar API Route?
+
+* Evita problemas de CORS
+* Centraliza a comunicação SOAP
+* Mantém o frontend desacoplado do backend
+* Facilita manutenção e evolução futura
+
+---
+
+## 📦 Funcionalidades
+
+---
+
+### 🟢 Criar Remessa
+
+* Formulário com validação
+* Envio de XML SOAP
+* Exibição da resposta
+* Exibição do XML enviado e recebido
+
+---
+
+### 🔵 Consultar Remessa
+
+* Busca por ID
+* Exibição completa dos dados
+* Exibição do histórico de status
+* Tratamento de erros (SOAP Fault)
+
+---
+
+### 🟡 Atualizar Status
+
+* Alteração de status da remessa
+* Atualização automática do histórico
+* Feedback visual de sucesso/erro
+
+---
+
+### 🟣 Listar Remessas
+
+* Paginação
+* Filtro por status
+* Atualização de status diretamente na listagem
+* Exibição do total de registros
+
+---
+
+## 🔍 Debug XML (Diferencial)
+
+A aplicação exibe:
+
+### 📤 Request XML
+
+```xml
+<soap:Envelope>...</soap:Envelope>
+```
+
+### 📥 Response XML
+
+```xml
+<soap:Envelope>...</soap:Envelope>
+```
+
+👉 Isso permite visualizar exatamente como a comunicação SOAP está acontecendo.
+
+---
+
+## 🧱 Estrutura do Projeto
+
+```
+client/
+├── app/
+│   ├── page.tsx
+│   └── api/
+│       └── soap/
+│           └── route.ts
+│
+├── components/
+│   ├── shipment-form.tsx
+│   ├── shipment-search.tsx
+│   ├── shipment-list.tsx
+│   └── xml-debug.tsx
+│
+├── lib/
+│   ├── soap.ts
+│   └── xml.ts
+```
+
+---
+
+## ⚠️ Tratamento de Erros
+
+A aplicação trata:
+
+* SOAP Faults (ex: remessa não encontrada)
+* Status inválido
+* Erros de validação
+* Falhas de rede
+* XML inválido
+
+---
+
+## 🧠 Decisões Técnicas
+
+* Uso de API Route como proxy para chamadas SOAP
+* Separação de responsabilidades (components / lib)
+* Tipagem forte com TypeScript
+* UI simples focada em funcionalidade
+* Debug XML visível (requisito do desafio)
+
+---
+
+## 📌 Observações
+
+* Interface propositalmente simples
+* Foco principal na integração SOAP
+* Projeto preparado para evolução futura
+
+---
+
+## 🚀 Possíveis melhorias
+
+* Melhorias de UI (Tailwind, design system)
+* Autenticação de usuários
+* Persistência de dados no frontend
+* Cache de requisições
+* Testes automatizados (Jest / Cypress)
+
+---
+
+## 🎯 Conclusão
+
+Este projeto demonstra:
+
+* Integração completa com serviços SOAP
+* Manipulação de XML no frontend
+* Arquitetura limpa e organizada
+* Tratamento de erros e validações
+
+👉 Atende todos os requisitos do desafio técnico.
